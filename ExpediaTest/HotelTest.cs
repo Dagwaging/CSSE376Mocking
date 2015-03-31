@@ -54,5 +54,18 @@ namespace ExpediaTest
 			new Hotel(-5);
 		}
 		
+        [TestMethod]
+        public void TestThatHotelDoesGetRoomOccupantFromTheDatabase()
+        {
+            IDatabase mockDB = mocks.StrictMock<IDatabase>();
+
+            String roomOccupant = "Whale Rider";
+            String anotherRoomOccupant = "Raptor Wrangler";
+
+            Expect.Call(mockDB.getRoomOccupant(24)).Return(roomOccupant);
+            Expect.Call(mockDB.getRoomOccupant(1025)).Return(anotherRoomOccupant);
+
+            mocks.ReplayAll();
+        }
 	}
 }
