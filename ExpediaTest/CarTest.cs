@@ -33,14 +33,14 @@ namespace ExpediaTest
 		[TestMethod]
 		public void TestThatCarHasCorrectBasePriceForTenDays()
 		{
-            var target = new Car(10);
+            var target = ObjectMother.BMW();
 			Assert.AreEqual(80, target.getBasePrice());	
 		}
 		
 		[TestMethod]
 		public void TestThatCarHasCorrectBasePriceForSevenDays()
 		{
-			var target = new Car(7);
+            var target = ObjectMother.Saab();
 			Assert.AreEqual(10*7*.8, target.getBasePrice());
 		}
 		
