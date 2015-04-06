@@ -88,5 +88,30 @@ namespace ExpediaTest
 
             mocks.VerifyAll();
         }
+
+        [TestMethod]
+        public void TestThatHotelDoesGetRoomCountFromDatabase()
+        {
+            IDatabase mockDatabase = mocks.StrictMock<IDatabase>();
+            List<Int32> Rooms = new List<int>();
+
+            for (var i = 0; i < 100; i++)
+            {
+                Rooms.Add(i);
+            }
+
+            Expect.Call(mockDatabase.Rooms).PropertyBehavior();
+
+            mocks.ReplayAll();
+            mockDatabase.Rooms = Rooms;
+
+            var target = new Hotel(10);
+            target.Database = mockDatabase;
+
+            int roomCount = target.AvailableRooms;
+            Assert.AreEqual(roomCount, Rooms.Count);
+
+            mocks.VerifyAll();
+        }
 	}
 }
