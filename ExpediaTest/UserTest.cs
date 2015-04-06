@@ -102,6 +102,24 @@ namespace ExpediaTest
             Assert.AreEqual(1, serviceLocator.AvailableCars.Count);
             Assert.AreEqual(remainingCar, serviceLocator.AvailableCars[0]);
         }
+
+        [TestMethod]
+        public void TestThatUserDoesRemoveFlightFromServiceLocatorWhenBooked()
+        {
+            ServiceLocator serviceLocator = new ServiceLocator();
+            var flightToBook = new Flight(StartDate, EndDate, 500);
+            var remainingFlight = new Flight(StartDate, EndDate, 300);
+            serviceLocator.AddFlight(flightToBook);
+            serviceLocator.AddFlight(remainingFlight);
+
+            typeof(ServiceLocator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic).SetValue(serviceLocator, serviceLocator);
+
+            var target = new User("Bob");
+            target.book(flightToBook);
+
+            Assert.AreEqual(1, serviceLocator.AvailableFlights.Count);
+            Assert.AreEqual(remainingFlight, serviceLocator.AvailableFlights[0]);
+        }
 		
 		[TestCleanup]
 		public void TearDown()
