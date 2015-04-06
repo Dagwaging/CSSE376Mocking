@@ -76,5 +76,26 @@ namespace ExpediaTest
 
             mocks.VerifyAll();
         }
+
+        [TestMethod]
+        public void TestThatCarHasCorrectMileage()
+        {
+            IDatabase mockDatabase = mocks.StrictMock<IDatabase>();
+
+            Expect.Call(mockDatabase.Miles).PropertyBehavior();
+
+            mocks.ReplayAll();
+
+            mockDatabase.Miles = 230;
+            
+            Car target = new Car(10);
+            target.Database = mockDatabase;
+
+            int mileage = target.Mileage;
+
+            Assert.AreEqual(230, mileage);
+
+            mocks.VerifyAll();
+        }
 	}
 }
